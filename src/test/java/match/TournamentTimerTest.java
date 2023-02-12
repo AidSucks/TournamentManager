@@ -9,6 +9,7 @@ public class TournamentTimerTest {
   public static void main(String[] args) {
     TmTimer myTimer = new TmTimer(10);
     myTimer.startTimer();
+    myTimer.stopTimer(true);
     myTimer.startTimer();
   }
 

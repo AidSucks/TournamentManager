@@ -7,28 +7,38 @@ public class TmTimer {
 
   private Timer timer;
   private boolean isRunning;
+  private boolean isPaused;
   private final int timerLength;
+  private int runCount;
 
   public TmTimer(int timerLength) throws InvalidTimerException {
     if(timerLength <= 0) throw new InvalidTimerException();
 
     this.isRunning = false;
-    this.timer = new Timer();
     this.timerLength = timerLength;
   }
 
   public void startTimer() {
     if(isRunning) return;
 
-    this.timer.scheduleAtFixedRate(new TmTimerTask(), 0, 1000);
+    this.timer = new Timer();
+
+    if(isPaused) {
+      this.timer.scheduleAtFixedRate(new TmTimerTask(runCount), 0, 1000);
+      this.isPaused = false;
+    }else {
+      this.timer.scheduleAtFixedRate(new TmTimerTask(timerLength), 0, 1000);
+    }
+
     this.isRunning = true;
   }
 
-  public void stopTimer() {
+  public void stopTimer(boolean pause) {
     if(!isRunning) return;
 
     timer.cancel();
     this.isRunning = false;
+    this.isPaused = pause;
   }
 
   public int getLength() {
@@ -43,13 +53,18 @@ public class TmTimer {
 
   private class TmTimerTask extends TimerTask {
 
-    private int runCount = 0;
+    private TmTimerTask(int count) {
+      runCount = count;
+    }
 
     @Override
     public void run() {
-      System.out.println(timerLength - runCount);
-      if(runCount == timerLength) stopTimer();
-      runCount++;
+      if(runCount == 0) {
+        stopTimer(false);
+        return;
+      }
+      --runCount;
+      System.out.println(runCount);
     }
   }
 }

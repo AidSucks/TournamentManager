@@ -14,7 +14,7 @@ public class TmClient {
     SOCKET_ADDRESS = socketAddress;
   }
 
-  public void connectToServer() throws IOException{
+  public void connectToServer() throws IOException {
     CLIENT_SOCKET.connect(SOCKET_ADDRESS);
   }
 

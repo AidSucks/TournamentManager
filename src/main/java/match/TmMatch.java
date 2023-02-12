@@ -67,20 +67,6 @@ public class TmMatch {
       --teamCount;
   }
 
-  public boolean startMatch() {
-    tmTimer.startTimer();
-    return true;
-  }
-
-  public boolean pauseMatch() {
-    return true;
-  }
-
-  public boolean endMatch() {
-    tmTimer.stopTimer();
-    return true;
-  }
-
   public enum TeamColor {
     RED, BLUE
   }
